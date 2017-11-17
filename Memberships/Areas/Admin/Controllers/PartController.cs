@@ -13,114 +13,113 @@ using Memberships.Models;
 namespace Memberships.Areas.Admin.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class SectionController : Controller
+    public class PartController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Admin/Section
+        // GET: Admin/Part
         public async Task<ActionResult> Index()
         {
-            return View(await db.Sections.ToListAsync());
+            return View(await db.Parts.ToListAsync());
         }
 
-        // GET: Admin/Section/Details/5
+        // GET: Admin/Part/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Section section = await db.Sections.FindAsync(id);
-            if (section == null)
+            Part part = await db.Parts.FindAsync(id);
+            if (part == null)
             {
                 return HttpNotFound();
             }
-            return View(section);
+            return View(part);
         }
 
-        // GET: Admin/Section/Create
+        // GET: Admin/Part/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Section/Create
+        // POST: Admin/Part/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(
-            [Bind(Include = "Id,Title")] Section section)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title")] Part part)
         {
             if (ModelState.IsValid)
             {
-                db.Sections.Add(section);
+                db.Parts.Add(part);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(section);
+            return View(part);
         }
 
-        // GET: Admin/Section/Edit/5
+        // GET: Admin/Part/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Section section = await db.Sections.FindAsync(id);
-            if (section == null)
+            Part part = await db.Parts.FindAsync(id);
+            if (part == null)
             {
                 return HttpNotFound();
             }
-            return View(section);
+            return View(part);
         }
 
-        // POST: Admin/Section/Edit/5
+        // POST: Admin/Part/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(
-            [Bind(Include = "Id,Title")] Section section)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title")] Part part)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(section).State = EntityState.Modified;
+                db.Entry(part).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(section);
+            return View(part);
         }
 
-        // GET: Admin/Section/Delete/5
+        // GET: Admin/Part/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Section section = await db.Sections.FindAsync(id);
-            if (section == null)
+            Part part = await db.Parts.FindAsync(id);
+            if (part == null)
             {
                 return HttpNotFound();
             }
-            return View(section);
+            return View(part);
         }
 
-        // POST: Admin/Section/Delete/5
+        // POST: Admin/Part/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Section section = await db.Sections.FindAsync(id);
-            var isUnused = await db.Items.CountAsync(i => i.SectionId.Equals(id)) == 0;
+            Part part = await db.Parts.FindAsync(id);
+            var isUnused = await db.Items.CountAsync(i => i.PartId.Equals(id)) == 0;
             if (isUnused)
             {
-                db.Sections.Remove(section);
+                db.Parts.Remove(part);
                 await db.SaveChangesAsync();
             }
+
             return RedirectToAction("Index");
         }
 

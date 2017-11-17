@@ -30,7 +30,7 @@ namespace Memberships.Areas.Admin.Models
                     param.Append(String.Format("{0}={1}&", "subscriptionId", SubscriptionId));
 
                 return param.ToString().Substring(0, param.Length - 1);
-
+                
             }
         }
 
