@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Memberships.Entities.Item>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Url)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HTML)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WaitDays)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemTypeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SectionId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PartId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsFree)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Url)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ImageUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HTML)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WaitDays)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemTypeId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SectionId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PartId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsFree)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
