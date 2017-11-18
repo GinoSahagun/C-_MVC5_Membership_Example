@@ -16,6 +16,8 @@ namespace Memberships.Extensions
             this IEnumerable<Product> products,
             ApplicationDbContext db )
         {
+            if (products.Count().Equals(0))
+                return new List<ProductModel>();
             var texts = await db.ProductLinkTexts.ToListAsync();
             var types = await db.ProductTypes.ToListAsync();
 
