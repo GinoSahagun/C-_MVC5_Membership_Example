@@ -258,7 +258,7 @@
     <Content Include="Areas\Admin\Views\Section\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Section\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Section\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_BackToListPartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_BackToListButtonPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_EditButtonPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_CreateButtonPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_SmallButtonPartial.cshtml" />

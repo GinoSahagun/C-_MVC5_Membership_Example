@@ -1,5 +1,5 @@
 ﻿@model Memberships.Entities.Item
-
+@using Memberships.Extensions;
 @{
     ViewBag.Title = "Edit";
 }
@@ -9,13 +9,11 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Item</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -51,7 +49,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.HTML, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.HTML, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.HTML, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.HTML, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -65,33 +63,31 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ItemTypes, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ProductId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ItemTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ItemTypeId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.ItemTypeId,
+               Model.ItemTypes.ToSelectListItem(Model.ItemTypeId)
+               , new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ItemTypeId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SectionId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Sections, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SectionId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.SectionId,
+               Model.Sections.ToSelectListItem(Model.SectionId)
+               , new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.SectionId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PartId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Parts, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PartId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.PartId,
+               Model.Parts.ToSelectListItem(Model.PartId)
+               , new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PartId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -108,12 +104,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" role="button" value="Save" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.Partial("_BackToListButtonPartial")
 </div>
