@@ -35,5 +35,32 @@ namespace Memberships.Extensions
                    };
 
         }
+        public static async Task<ProductModel> Convert(
+            this Product product,
+            ApplicationDbContext db)
+        {
+
+            var text = await db.ProductLinkTexts.FirstOrDefaultAsync(
+                p => p.Id.Equals(product.ProductLinkTextId));
+            var type = await db.ProductTypes.FirstOrDefaultAsync(
+                p => p.Id.Equals(product.ProductTypeId));
+
+            var model = new ProductModel
+                   {
+                       Id = product.Id,
+                       Title = product.Title,
+                       Description = product.Description,
+                       ImageUrl = product.ImageUrl,
+                       ProductLinkTextId = product.ProductLinkTextId,
+                       ProductTypeId = product.ProductTypeId,
+                       ProductLinkTexts = new List<ProductLinkText>(),
+                       ProductTypes = new List<ProductType>()
+            };
+            model.ProductLinkTexts.Add(text);
+            model.ProductTypes.Add(type);
+
+            return model;
+
+        }
     }
 }
