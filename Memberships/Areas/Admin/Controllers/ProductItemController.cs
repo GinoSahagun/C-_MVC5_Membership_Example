@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using Memberships.Entities;
 using Memberships.Models;
+using Memberships.Areas.Admin.Models;
+using Memberships.Extensions;
 
 namespace Memberships.Areas.Admin.Controllers
 {
@@ -19,7 +21,7 @@ namespace Memberships.Areas.Admin.Controllers
         // GET: Admin/ProductItem
         public async Task<ActionResult> Index()
         {
-            return View(await db.ProductItems.ToListAsync());
+            return View(await db.ProductItems.Convert(db));
         }
 
         // GET: Admin/ProductItem/Details/5
@@ -38,9 +40,14 @@ namespace Memberships.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductItem/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            var model = new ProductItemModel
+            {
+                Items = await db.Items.ToListAsync(),
+                Products = await db.Products.ToListAsync()
+            };
+            return View(model);
         }
 
         // POST: Admin/ProductItem/Create
@@ -61,18 +68,19 @@ namespace Memberships.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductItem/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int? itemId, int? productId)
         {
-            if (id == null)
+            if (itemId == null || productId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ProductItem productItem = await db.ProductItems.FindAsync(id);
+            ProductItem productItem = await GetProductItem(itemId, productId);
             if (productItem == null)
             {
                 return HttpNotFound();
             }
-            return View(productItem);
+            var productItemModel = await productItem.Convert(db);
+            return View(productItemModel);
         }
 
         // POST: Admin/ProductItem/Edit/5
@@ -117,6 +125,21 @@ namespace Memberships.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        private async Task<ProductItem> GetProductItem(int? ItemId, int? ProductId )
+        {
+            try
+            {
+                int itmId = 0, productId = 0;
+                int.TryParse(ItemId.ToString(), out itmId);
+                int.TryParse(ProductId.ToString(), out productId);
+                var productItem = await db.ProductItems.FirstOrDefaultAsync(
+                    pi => pi.ProductId.Equals(productId) && pi.ItemId.Equals(itmId));
+                return productItem;
+
+            }
+            catch { return null; }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -125,5 +148,6 @@ namespace Memberships.Areas.Admin.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

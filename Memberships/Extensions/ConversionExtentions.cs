@@ -12,6 +12,50 @@ namespace Memberships.Extensions
 {
     public static class ConversionExtentions
     {
+        // Converts a List of Product Items into a proper list of Product Item Models 
+        public static async Task<IEnumerable<ProductItemModel>> Convert(
+        this IQueryable<ProductItem> productItems,
+        ApplicationDbContext db)
+        {
+            if (productItems.Count().Equals(0))
+                return new List<ProductItemModel>();
+            var texts = await db.ProductLinkTexts.ToListAsync();
+            var types = await db.ProductTypes.ToListAsync();
+
+            return await (from pi in productItems
+                   select new ProductItemModel
+                   {
+                        ProductId = pi.ProductId,
+                        ItemId = pi.ItemId,
+                        ItemTitle = db.Items.FirstOrDefault(
+                            i => i.Id.Equals(pi.ItemId)).Title,
+                       ProductTitle = db.Products.FirstOrDefault(
+                            p => p.Id.Equals(pi.ProductId)).Title,
+
+                   }).ToListAsync();
+
+        }
+        // Converts a Product into a proper Product Item Model 
+        public static async Task<ProductItemModel> Convert(
+            this ProductItem product,
+            ApplicationDbContext db)
+        {
+
+
+            var model = new ProductItemModel
+            {
+                ProductId = product.ProductId,
+                ItemId = product.ItemId,
+                Items = await db.Items.ToListAsync(),
+                Products = await db.Products.ToListAsync()
+
+            };
+          
+
+            return model;
+
+        }
+        // Converts a List of Product into a proper list of Product Models 
         public static async Task<IEnumerable<ProductModel>>  Convert(
             this IEnumerable<Product> products,
             ApplicationDbContext db )
@@ -35,6 +79,7 @@ namespace Memberships.Extensions
                    };
 
         }
+        // Converts a Product into a proper Product Model 
         public static async Task<ProductModel> Convert(
             this Product product,
             ApplicationDbContext db)
