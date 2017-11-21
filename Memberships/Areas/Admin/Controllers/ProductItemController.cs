@@ -25,18 +25,18 @@ namespace Memberships.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductItem/Details/5
-        public async Task<ActionResult> Details(int? id)
+        public async Task<ActionResult> Details(int? itemId, int? productid)
         {
-            if (id == null)
+            if (itemId == null || productid == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ProductItem productItem = await db.ProductItems.FindAsync(id);
+            ProductItem productItem = await GetProductItem(itemId, productid);
             if (productItem == null)
             {
                 return HttpNotFound();
             }
-            return View(productItem);
+            return View(await productItem.Convert(db));
         }
 
         // GET: Admin/ProductItem/Create
@@ -103,26 +103,26 @@ namespace Memberships.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductItem/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public async Task<ActionResult> Delete(int? itemId, int? productId)
         {
-            if (id == null)
+            if (itemId == null || productId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ProductItem productItem = await db.ProductItems.FindAsync(id);
+            ProductItem productItem = await GetProductItem(itemId, productId);
             if (productItem == null)
             {
                 return HttpNotFound();
             }
-            return View(productItem);
+            return View(await productItem.Convert(db));
         }
 
         // POST: Admin/ProductItem/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int itemId, int productId)
         {
-            ProductItem productItem = await db.ProductItems.FindAsync(id);
+            ProductItem productItem = await GetProductItem(itemId, productId);
             db.ProductItems.Remove(productItem);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");

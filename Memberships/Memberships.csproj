@@ -207,6 +207,8 @@
     <Compile Include="Areas\Admin\Controllers\ProductTypeController.cs" />
     <Compile Include="Areas\Admin\Controllers\SectionController.cs" />
     <Compile Include="Areas\Admin\Controllers\SubscriptionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SubscriptionProductController.cs" />
+    <Compile Include="Areas\Admin\Models\EditButtonModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductItemModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductModel.cs" />
     <Compile Include="Areas\Admin\Models\SmallButtonModel.cs" />
@@ -238,6 +240,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\MembershipsDatabase.mdf" />
+    <Content Include="App_Data\MembershipsDatabase_log.ldf">
+      <DependentUpon>MembershipsDatabase.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\imgs\csharp-for-beginners.png" />
@@ -361,7 +367,7 @@
     <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\SubscriptionProduct\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
