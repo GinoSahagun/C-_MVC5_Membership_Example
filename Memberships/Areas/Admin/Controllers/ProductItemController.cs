@@ -88,7 +88,8 @@ namespace Memberships.Areas.Admin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ProductId,ItemId,OldProductId,OldItemId")] ProductItem productItem)
+        public async Task<ActionResult> Edit(
+            [Bind(Include = "ProductId,ItemId,OldProductId,OldItemId")] ProductItem productItem)
         {
             if (ModelState.IsValid)
             {
