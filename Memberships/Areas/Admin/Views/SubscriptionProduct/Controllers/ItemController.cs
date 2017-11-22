@@ -12,114 +12,120 @@ using Memberships.Models;
 
 namespace Memberships.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class ItemTypeController : Controller
+    public class ItemController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Admin/ItemType
+        // GET: Admin/Item
         public async Task<ActionResult> Index()
         {
-            return View(await db.ItemTypes.ToListAsync());
+            return View(await db.Items.ToListAsync());
         }
 
-        // GET: Admin/ItemType/Details/5
+        // GET: Admin/Item/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemType itemType = await db.ItemTypes.FindAsync(id);
-            if (itemType == null)
+            Item item = await db.Items.FindAsync(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(itemType);
+            return View(item);
         }
 
-        // GET: Admin/ItemType/Create
+        // GET: Admin/Item/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new Item
+            {
+                ItemTypes = db.ItemTypes.ToList(),
+                Parts = db.Parts.ToList(),
+                Sections = db.Sections.ToList()
+            };
+            return View(model);
         }
 
-        // POST: Admin/ItemType/Create
+        // POST: Admin/Item/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title")] ItemType itemType)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Description,Url,ImageUrl,HTML,WaitDays,ProductId,ItemTypeId,SectionId,PartId,IsFree")] Item item)
         {
             if (ModelState.IsValid)
             {
-                db.ItemTypes.Add(itemType);
+                db.Items.Add(item);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(itemType);
+            return View(item);
         }
 
-        // GET: Admin/ItemType/Edit/5
+        // GET: Admin/Item/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemType itemType = await db.ItemTypes.FindAsync(id);
-            if (itemType == null)
+            Item item = await db.Items.FindAsync(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(itemType);
+
+
+           item.ItemTypes = await db.ItemTypes.ToListAsync();
+           item.Parts = await db.Parts.ToListAsync();
+           item.Sections = await db.Sections.ToListAsync();
+
+            return View(item);
         }
 
-        // POST: Admin/ItemType/Edit/5
+        // POST: Admin/Item/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title")] ItemType itemType)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Description,Url,ImageUrl,HTML,WaitDays,ProductId,ItemTypeId,SectionId,PartId,IsFree")] Item item)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(itemType).State = EntityState.Modified;
+                db.Entry(item).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(itemType);
+            return View(item);
         }
 
-        // GET: Admin/ItemType/Delete/5
+        // GET: Admin/Item/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ItemType itemType = await db.ItemTypes.FindAsync(id);
-            if (itemType == null)
+            Item item = await db.Items.FindAsync(id);
+            if (item == null)
             {
                 return HttpNotFound();
             }
-            return View(itemType);
+            return View(item);
         }
 
-        // POST: Admin/ItemType/Delete/5
+        // POST: Admin/Item/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            ItemType itemType = await db.ItemTypes.FindAsync(id);
-            var isUnused = await db.Items.CountAsync(i => i.ItemTypeId.Equals(id)) == 0;
-            if (isUnused)
-            {
-                db.ItemTypes.Remove(itemType);
-                await db.SaveChangesAsync();
-            }
-
+            Item item = await db.Items.FindAsync(id);
+            db.Items.Remove(item);
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
