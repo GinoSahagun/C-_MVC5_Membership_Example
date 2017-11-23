@@ -229,6 +229,7 @@
     <Compile Include="Entities\UserSubscription.cs" />
     <Compile Include="Extensions\ConversionExtentions.cs" />
     <Compile Include="Extensions\ICollectionExtensions.cs" />
+    <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -237,6 +238,9 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UserSubscriptionModel.cs" />
+    <Compile Include="Models\UserSubscriptionViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -273,11 +277,8 @@
     <Content Include="Areas\Admin\Views\Section\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Section\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Section\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_BackToListButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_BackToListButtonPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_EditButtonPartial.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_CreateButtonPartial.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_SmallButtonPartial.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_TableButtonsPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Part\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Part\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Part\Details.cshtml" />
@@ -371,6 +372,14 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_AdminMenuPartial.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Shared\_CreateButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_SmallButtonPartial.cshtml" />
+    <Content Include="Views\Shared\_TableButtonsPartial.cshtml" />
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Subscriptions.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
